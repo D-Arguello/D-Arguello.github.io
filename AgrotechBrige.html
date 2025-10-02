@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="msapplication-navbutton-color" content="#065f46">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <title>Agrotech Bridge - Agricultura de Precisión</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
@@ -11,16 +15,74 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Inter', sans-serif; }
-    .gradient-bg { background: linear-gradient(135deg, #065f46 0%, #10b981 100%); }
-    .hero-gradient { background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); }
-    .card-hover { transition: all 0.3s ease; }
-    .card-hover:hover { transform: translateY(-8px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+    /* Forzar modo claro y prevenir modo oscuro automático */
+    html {
+      color-scheme: light;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff !important;
+      color: #374151 !important;
+      color-scheme: light;
+    }
+    
+    /* Prevenir modo oscuro en navegadores Samsung */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #ffffff !important;
+        color: #374151 !important;
+      }
+    }
+    
+    .gradient-bg { background: linear-gradient(135deg, #065f46 0%, #10b981 100%) !important; }
+    .hero-gradient { background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%) !important; }
+    .card-hover { 
+      transition: all 0.3s ease;
+      background-color: #ffffff !important;
+    }
+    .card-hover:hover { 
+      transform: translateY(-8px); 
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      background-color: #ffffff !important;
+    }
     .pulse-btn { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .8; } }
     .floating { animation: float 6s ease-in-out infinite; }
     @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-20px); } 100% { transform: translateY(0px); } }
-    .navbar-blur { backdrop-filter: blur(10px); background-color: rgba(5, 95, 70, 0.9); }
+    .navbar-blur { 
+      backdrop-filter: blur(10px); 
+      background-color: rgba(5, 95, 70, 0.9) !important;
+    }
+    
+    /* Asegurar colores consistentes en elementos principales */
+    .bg-white {
+      background-color: #ffffff !important;
+    }
+    
+    .bg-gray-50 {
+      background-color: #f9fafb !important;
+    }
+    
+    .bg-gray-900 {
+      background-color: #111827 !important;
+    }
+    
+    .text-white {
+      color: #ffffff !important;
+    }
+    
+    .text-gray-800 {
+      color: #1f2937 !important;
+    }
+    
+    .text-gray-600 {
+      color: #4b5563 !important;
+    }
+    
+    .text-gray-400 {
+      color: #9ca3af !important;
+    }
     /* Mobile Sidebar Styles */
     .sidebar-open #sidebarPanel {
       transform: translateX(0);
@@ -126,6 +188,30 @@
     .hamburger.active span:nth-child(1) { transform: rotate(-45deg) translate(-5px, 6px); }
     .hamburger.active span:nth-child(2) { opacity: 0; }
     .hamburger.active span:nth-child(3) { transform: rotate(45deg) translate(-5px, -6px); }
+    
+    /* Prevenir inversión de colores en Samsung Internet y otros navegadores */
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* Forzar estilos para formularios y inputs */
+    input, select, textarea {
+      background-color: rgba(255, 255, 255, 0.2) !important;
+      color: #ffffff !important;
+    }
+    
+    /* Asegurar que las secciones mantengan sus fondos */
+    section {
+      background-color: inherit !important;
+    }
+    
+    /* Prevenir cambios automáticos de color en webkit */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+      -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.2) inset !important;
+      -webkit-text-fill-color: #ffffff !important;
+    }
   </style>
 </head>
 <body class="bg-white text-gray-800">
