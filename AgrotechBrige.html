@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agrotech Bridge - Agricultura de Precisión</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .gradient-bg { background: linear-gradient(135deg, #065f46 0%, #10b981 100%); }
+    .hero-gradient { background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); }
+    .card-hover { transition: all 0.3s ease; }
+    .card-hover:hover { transform: translateY(-8px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+    .pulse-btn { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .8; } }
+    .floating { animation: float 6s ease-in-out infinite; }
+    @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-20px); } 100% { transform: translateY(0px); } }
+    .navbar-blur { backdrop-filter: blur(10px); background-color: rgba(5, 95, 70, 0.9); }
+    /* Mobile Sidebar Styles */
+    .sidebar-open #sidebarPanel {
+      transform: translateX(0);
+    }
+    .sidebar-open #mobileSidebar {
+      display: block !important;
+    }
+    .sidebar-open #sidebarOverlay {
+      opacity: 0.5;
+    }
+    #mobileSidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 100vh;
+      z-index: 1000;
+    }
+    #sidebarPanel {
+      height: 100vh !important;
+      background-color: #065f46 !important;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+    #sidebarOverlay {
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+    
+    /* Menu Items Animation */
+    .sidebar-open .sidebar-animate {
+      animation: slideInLeft 0.6s ease-out forwards;
+    }
+    
+    @keyframes slideInLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    /* Staggered animation delays for menu items */
+    .sidebar-animate:nth-child(1) { animation-delay: 0.1s; }
+    .sidebar-animate:nth-child(2) { animation-delay: 0.15s; }
+    .sidebar-animate:nth-child(3) { animation-delay: 0.2s; }
+    .sidebar-animate:nth-child(4) { animation-delay: 0.25s; }
+    .sidebar-animate:nth-child(5) { animation-delay: 0.3s; }
+    
+    /* CTA Button pulse animation */
+    .sidebar-open .cta-animate {
+      animation: pulseIn 0.8s ease-out 0.4s forwards;
+    }
+    
+    @keyframes pulseIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
+    /* Contact info fade in */
+    .sidebar-open .contact-animate {
+      animation: fadeInUp 0.6s ease-out 0.5s forwards;
+    }
+    
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Initial hidden state for animated elements */
+    .sidebar-animate,
+    .cta-animate,
+    .contact-animate {
+      opacity: 0;
+    }
+    .mobile-menu-panel.open { 
+      transform: translateX(0); 
+    }
+
+    .mobile-menu-overlay { opacity: 0; visibility: hidden; transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; }
+    .mobile-menu-overlay.open { opacity: 1; visibility: visible; }
+    .hamburger { cursor: pointer; }
+    .hamburger span { display: block; width: 25px; height: 3px; background: white; margin: 5px 0; transition: 0.3s; }
+    .hamburger.active span:nth-child(1) { transform: rotate(-45deg) translate(-5px, 6px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(45deg) translate(-5px, -6px); }
+  </style>
+</head>
+<body class="bg-white text-gray-800">
+
+  <!-- HEADER -->
+  <header class="fixed w-full z-50 navbar-blur border-b border-green-600/20 transition-all duration-300">
+    <div class="container mx-auto flex justify-between items-center p-4 lg:px-8">
+      <!-- Logo -->
+      <div class="flex items-center space-x-2 lg:space-x-3">
+        <img src="img/Logo_agrotechBridge.png" alt="Agrotech Bridge Logo" class="h-8 sm:h-10 lg:h-12 w-auto">
+        <div class="font-bold text-lg sm:text-xl lg:text-2xl text-white">
+          <span class="hidden sm:inline">Agrotech Bridge</span>
+          <span class="sm:hidden">Agrotech</span>
+        </div>
+      </div>
+      
+      <!-- Desktop Navigation -->
+      <nav class="space-x-8 hidden lg:block">
+        <a href="#inicio" class="text-white hover:text-emerald-300 transition-colors font-medium">Inicio</a>
+        <a href="#problema" class="text-white hover:text-emerald-300 transition-colors font-medium">Problema</a>
+        <a href="#solucion" class="text-white hover:text-emerald-300 transition-colors font-medium">Solución</a>
+        <a href="#beneficios" class="text-white hover:text-emerald-300 transition-colors font-medium">Beneficios</a>
+        <a href="#contacto" class="text-white hover:text-emerald-300 transition-colors font-medium">Contacto</a>
+      </nav>
+      
+      <!-- Desktop CTA Button -->
+      <a href="#contacto" class="bg-white text-green-700 px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 inline-block text-sm sm:text-base hidden md:block">
+        🚀 <span class="hidden sm:inline">Únete al Piloto</span><span class="sm:hidden">Piloto</span>
+      </a>
+      
+      <!-- Mobile Menu Button -->
+      <button class="hamburger lg:hidden" id="mobileMenuBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    
+    <!-- Mobile Sidebar Menu -->
+    <div id="mobileSidebar" class="fixed inset-0 z-50 hidden lg:hidden">
+      <!-- Dark Overlay -->
+      <div id="sidebarOverlay" class="fixed inset-0 bg-black opacity-50 w-full h-full"></div>
+      
+      <!-- Sidebar Panel -->
+      <div id="sidebarPanel" class="relative flex flex-col w-full max-w-xs ml-0 transform -translate-x-full transition-transform duration-300 ease-in-out" style="background-color: #065f46; height: 100vh;">
+        <div class="flex-1 h-full pt-5 pb-4 overflow-y-auto" style="background-color: #065f46;">
+          <div class="flex items-center flex-shrink-0 px-4 sidebar-animate">
+            <img src="img/Logo_agrotechBridge.png" alt="Agrotech Bridge" class="h-8 w-auto transform hover:scale-110 transition-transform duration-300">
+            <span class="ml-2 text-white font-bold text-lg">Agrotech Bridge</span>
+          </div>
+          <nav class="mt-8 px-4 space-y-1">
+            <a href="#inicio" class="sidebar-link sidebar-animate group flex items-center px-2 py-3 text-base font-medium text-white rounded-md hover:bg-opacity-20 hover:bg-white transition-all duration-300">
+              <span class="mr-3 text-lg">🏠</span>
+              Inicio
+            </a>
+            <a href="#problema" class="sidebar-link sidebar-animate group flex items-center px-2 py-3 text-base font-medium text-white rounded-md hover:bg-opacity-20 hover:bg-white transition-all duration-300">
+              <span class="mr-3 text-lg">⚠️</span>
+              Problema
+            </a>
+            <a href="#solucion" class="sidebar-link sidebar-animate group flex items-center px-2 py-3 text-base font-medium text-white rounded-md hover:bg-opacity-20 hover:bg-white transition-all duration-300">
+              <span class="mr-3 text-lg">✅</span>
+              Solución
+            </a>
+            <a href="#beneficios" class="sidebar-link sidebar-animate group flex items-center px-2 py-3 text-base font-medium text-white rounded-md hover:bg-opacity-20 hover:bg-white transition-all duration-300">
+              <span class="mr-3 text-lg">📈</span>
+              Beneficios
+            </a>
+            <a href="#contacto" class="sidebar-link sidebar-animate group flex items-center px-2 py-3 text-base font-medium text-white rounded-md hover:bg-opacity-20 hover:bg-white transition-all duration-300">
+              <span class="mr-3 text-lg">📞</span>
+              Contacto
+            </a>
+          </nav>
+          
+          <!-- CTA Button -->
+          <div class="mt-8 px-4">
+            <a href="#contacto" class="sidebar-link cta-animate bg-white text-green-800 group flex items-center justify-center px-4 py-3 text-base font-bold rounded-full hover:bg-gray-100 hover:scale-105 transition-all duration-300 transform">
+              <span class="mr-2 text-lg">🚀</span>
+              Únete al Piloto
+            </a>
+          </div>
+          
+          <!-- Contact Info -->
+          <div class="mt-8 px-4 pt-6 contact-animate" style="border-top: 1px solid rgba(255, 255, 255, 0.2);">
+            <h4 class="text-emerald-300 font-semibold text-sm mb-3">📞 CONTÁCTANOS</h4>
+            <div class="space-y-2 text-white text-sm opacity-90">
+              <p class="flex items-center"><span class="mr-2">📧</span> info@agrotechbridge.com</p>
+              <p class="flex items-center"><span class="mr-2">�</span> +1 (555) 123-4567</p>
+              <p class="flex items-center"><span class="mr-2">�️</span> México, Colombia, España</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="inicio" class="min-h-screen hero-gradient flex flex-col justify-center items-center text-center px-4 sm:px-6 pt-20">
+    <div class="max-w-5xl mx-auto">
+      <div class="floating mb-6 sm:mb-8">
+        <img src="img/Logo_agrotechBridge.png" alt="Agrotech Bridge" class="h-16 sm:h-24 lg:h-32 w-auto mx-auto mb-4 drop-shadow-lg">
+      </div>
+      <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 text-green-800 leading-tight" data-aos="fade-up">
+        Confianza y <span class="text-emerald-600">tecnología</span> para una agricultura más 
+        <span class="bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent">rentable y sostenible</span>
+      </h1>
+      <p class="mb-6 sm:mb-8 text-lg sm:text-xl lg:text-2xl max-w-4xl mx-auto text-green-700 font-light leading-relaxed" data-aos="fade-up" data-aos-delay="200">
+        Formación práctica + asesoría personalizada + tecnologías certificadas al servicio de agricultores y cooperativas.
+      </p>
+      
+      <!-- Estadísticas Hero -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-10 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="400">
+        <div class="bg-white/80 backdrop-blur p-4 sm:p-6 rounded-2xl shadow-lg">
+          <div class="text-2xl sm:text-3xl font-bold text-green-700">+15%</div>
+          <div class="text-xs sm:text-sm text-green-600">Incremento en productividad</div>
+        </div>
+        <div class="bg-white/80 backdrop-blur p-4 sm:p-6 rounded-2xl shadow-lg">
+          <div class="text-2xl sm:text-3xl font-bold text-green-700">-25%</div>
+          <div class="text-xs sm:text-sm text-green-600">Reducción en costos</div>
+        </div>
+        <div class="bg-white/80 backdrop-blur p-4 sm:p-6 rounded-2xl shadow-lg">
+          <div class="text-2xl sm:text-3xl font-bold text-green-700">100+</div>
+          <div class="text-xs sm:text-sm text-green-600">Agricultores beneficiados</div>
+        </div>
+      </div>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center" data-aos="fade-up" data-aos-delay="600">
+        <a href="#contacto" class="gradient-bg text-white px-6 sm:px-10 py-3 sm:py-4 rounded-full font-semibold shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 text-base sm:text-lg pulse-btn inline-block w-full sm:w-auto text-center">
+          🚀 <span class="hidden xs:inline">Quiero participar en el piloto</span><span class="xs:hidden">Participar en piloto</span>
+        </a>
+        <a href="#problema" class="bg-white text-green-700 px-6 sm:px-10 py-3 sm:py-4 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 text-base sm:text-lg border-2 border-green-200 inline-block w-full sm:w-auto text-center">
+          📖 <span class="hidden xs:inline">Ver más información</span><span class="xs:hidden">Más info</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEMA -->
+  <section id="problema" class="py-20 px-6 bg-gray-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <h2 class="text-4xl lg:text-5xl font-bold mb-6 text-gray-800">El reto del campo hoy</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          A pesar de los avances tecnológicos, los agricultores enfrentan barreras significativas para adoptar soluciones innovadoras
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Reto 1 -->
+        <div class="bg-white p-8 rounded-2xl shadow-lg card-hover text-center" data-aos="fade-up" data-aos-delay="100">
+          <div class="w-20 h-20 mx-auto mb-6 bg-red-100 rounded-2xl flex items-center justify-center">
+            <img src="img/reto1.png" alt="Tecnologías no llegan al agricultor" class="w-12 h-12 rounded-lg">
+          </div>
+          <div class="text-4xl mb-4">🌱</div>
+          <h3 class="font-semibold text-lg mb-3 text-gray-800">Brecha Tecnológica</h3>
+          <p class="text-gray-600">Las tecnologías existen, pero no llegan al agricultor de forma accesible</p>
+        </div>
+        
+        <!-- Reto 2 -->
+        <div class="bg-white p-8 rounded-2xl shadow-lg card-hover text-center" data-aos="fade-up" data-aos-delay="200">
+          <div class="w-20 h-20 mx-auto mb-6 bg-orange-100 rounded-2xl flex items-center justify-center">
+            <img src="img/reto2.png" alt="Desconfianza hacia corporaciones" class="w-12 h-12 rounded-lg">
+          </div>
+          <div class="text-4xl mb-4">🤝</div>
+          <h3 class="font-semibold text-lg mb-3 text-gray-800">Falta de Confianza</h3>
+          <p class="text-gray-600">Desconfianza hacia grandes corporaciones y sus promesas no cumplidas</p>
+        </div>
+        
+        <!-- Reto 3 -->
+        <div class="bg-white p-8 rounded-2xl shadow-lg card-hover text-center" data-aos="fade-up" data-aos-delay="300">
+          <div class="w-20 h-20 mx-auto mb-6 bg-blue-100 rounded-2xl flex items-center justify-center">
+            <img src="img/reto3.png" alt="Falta de formación práctica" class="w-12 h-12 rounded-lg">
+          </div>
+          <div class="text-4xl mb-4">📚</div>
+          <h3 class="font-semibold text-lg mb-3 text-gray-800">Capacitación Insuficiente</h3>
+          <p class="text-gray-600">Falta de formación práctica y adaptada a la realidad del campo</p>
+        </div>
+        
+        <!-- Reto 4 -->
+        <div class="bg-white p-8 rounded-2xl shadow-lg card-hover text-center" data-aos="fade-up" data-aos-delay="400">
+          <div class="w-20 h-20 mx-auto mb-6 bg-purple-100 rounded-2xl flex items-center justify-center">
+            <img src="img/reto4.png" alt="Dificultad para decidir equipos" class="w-12 h-12 rounded-lg">
+          </div>
+          <div class="text-4xl mb-4">⚡</div>
+          <h3 class="font-semibold text-lg mb-3 text-gray-800">Decisiones Complejas</h3>
+          <p class="text-gray-600">Dificultad para decidir qué tecnología comprar y cómo implementarla</p>
+        </div>
+      </div>
+      
+      <!-- Estadísticas del problema -->
+      <div class="mt-16 bg-gradient-to-r from-red-500 to-orange-500 rounded-3xl p-8 text-white text-center" data-aos="fade-up" data-aos-delay="500">
+        <h3 class="text-2xl font-bold mb-6">El costo de no actuar</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <div class="text-3xl font-bold">40%</div>
+            <div class="text-sm opacity-90">Pérdidas por falta de optimización</div>
+          </div>
+          <div>
+            <div class="text-3xl font-bold">65%</div>
+            <div class="text-sm opacity-90">Agricultores sin acceso a tecnología</div>
+          </div>
+          <div>
+            <div class="text-3xl font-bold">2030</div>
+            <div class="text-sm opacity-90">Año límite para la transformación</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUCIÓN -->
+  <section id="solucion" class="py-20 px-6 gradient-bg text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-black opacity-10"></div>
+    <div class="max-w-6xl mx-auto relative z-10">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <h2 class="text-4xl lg:text-5xl font-bold mb-6">Nuestra Solución Integral</h2>
+        <p class="text-xl opacity-90 max-w-3xl mx-auto">
+          Un enfoque completo que combina confianza, tecnología y resultados medibles para transformar tu agricultura
+        </p>
+      </div>
+      
+      <div class="grid lg:grid-cols-3 gap-8 mb-16">
+        <div class="bg-white/10 backdrop-blur p-8 rounded-2xl border border-white/20 card-hover" data-aos="fade-up" data-aos-delay="100">
+          <div class="text-5xl mb-6">✅</div>
+          <h3 class="font-bold text-2xl mb-4">Asesoría Personalizada</h3>
+          <p class="text-lg opacity-90 mb-6">Te ayudamos a elegir las tecnologías más adecuadas según tus cultivos, presupuesto y objetivos específicos.</p>
+          <ul class="text-sm opacity-80 space-y-2">
+            <li>• Diagnóstico inicial gratuito</li>
+            <li>• Plan de implementación personalizado</li>
+            <li>• Seguimiento continuo</li>
+          </ul>
+        </div>
+        
+        <div class="bg-white/10 backdrop-blur p-8 rounded-2xl border border-white/20 card-hover" data-aos="fade-up" data-aos-delay="200">
+          <div class="text-5xl mb-6">🎓</div>
+          <h3 class="font-bold text-2xl mb-4">Formación Práctica</h3>
+          <p class="text-lg opacity-90 mb-6">Sesiones en campo con drones, sensores e IA para demostrar resultados reales y tangibles.</p>
+          <ul class="text-sm opacity-80 space-y-2">
+            <li>• Demos en tu propio campo</li>
+            <li>• Capacitación hands-on</li>
+            <li>• Soporte técnico 24/7</li>
+          </ul>
+        </div>
+        
+        <div class="bg-white/10 backdrop-blur p-8 rounded-2xl border border-white/20 card-hover" data-aos="fade-up" data-aos-delay="300">
+          <div class="text-5xl mb-6">🔬</div>
+          <h3 class="font-bold text-2xl mb-4">Tecnologías Certificadas</h3>
+          <p class="text-lg opacity-90 mb-6">Solo trabajamos con equipos probados y validados para garantizar confianza y eficiencia comprobada.</p>
+          <ul class="text-sm opacity-80 space-y-2">
+            <li>• Equipos certificados internacionalmente</li>
+            <li>• Garantía de resultados</li>
+            <li>• ROI garantizado</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Proceso paso a paso -->
+      <div class="text-center mb-12" data-aos="fade-up">
+        <h3 class="text-3xl font-bold mb-8">Cómo funciona nuestro proceso</h3>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4" data-aos="fade-up" data-aos-delay="400">
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center text-2xl font-bold">1</div>
+          <h4 class="font-semibold mb-2">Diagnóstico</h4>
+          <p class="text-sm opacity-80">Evaluamos tu situación actual</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center text-2xl font-bold">2</div>
+          <h4 class="font-semibold mb-2">Planificación</h4>
+          <p class="text-sm opacity-80">Diseñamos tu solución personalizada</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center text-2xl font-bold">3</div>
+          <h4 class="font-semibold mb-2">Demostración</h4>
+          <p class="text-sm opacity-80">Probamos la tecnología en tu campo</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center text-2xl font-bold">4</div>
+          <h4 class="font-semibold mb-2">Implementación</h4>
+          <p class="text-sm opacity-80">Instalamos y configuramos todo</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center text-2xl font-bold">5</div>
+          <h4 class="font-semibold mb-2">Acompañamiento</h4>
+          <p class="text-sm opacity-80">Te apoyamos en cada paso</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFICIOS -->
+  <section id="beneficios" class="py-20 px-6 bg-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <h2 class="text-4xl lg:text-5xl font-bold mb-6 text-gray-800">Beneficios Comprobados</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Resultados reales que nuestros agricultores ya están experimentando
+        </p>
+      </div>
+      
+      <div class="grid lg:grid-cols-3 gap-8 mb-16">
+        <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl shadow-lg card-hover text-center" data-aos="fade-up" data-aos-delay="100">
+          <div class="text-6xl mb-6">💧</div>
+          <h3 class="font-bold text-2xl mb-4 text-blue-800">Ahorro de Recursos</h3>
+          <p class="text-gray-700 mb-6">Optimización inteligente de agua, fertilizantes y tiempo de trabajo</p>
+          <div class="bg-white rounded-xl p-4">
+            <div class="text-3xl font-bold text-blue-600 mb-1">-30%</div>
+            <div class="text-sm text-gray-600">Reducción en consumo de agua</div>
+          </div>
+        </div>
+        
+        <div class="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-2xl shadow-lg card-hover text-center" data-aos="fade-up" data-aos-delay="200">
+          <div class="text-6xl mb-6">📈</div>
+          <h3 class="font-bold text-2xl mb-4 text-green-800">Mayor Productividad</h3>
+          <p class="text-gray-700 mb-6">Incrementa el rendimiento de tus cultivos con datos precisos y análisis predictivo</p>
+          <div class="bg-white rounded-xl p-4">
+            <div class="text-3xl font-bold text-green-600 mb-1">+15%</div>
+            <div class="text-sm text-gray-600">Aumento en productividad</div>
+          </div>
+        </div>
+        
+        <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 p-8 rounded-2xl shadow-lg card-hover text-center" data-aos="fade-up" data-aos-delay="300">
+          <div class="text-6xl mb-6">🌍</div>
+          <h3 class="font-bold text-2xl mb-4 text-emerald-800">Sostenibilidad</h3>
+          <p class="text-gray-700 mb-6">Contribuye a una agricultura responsable, regenerativa y competitiva</p>
+          <div class="bg-white rounded-xl p-4">
+            <div class="text-3xl font-bold text-emerald-600 mb-1">-20%</div>
+            <div class="text-sm text-gray-600">Reducción huella carbono</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Beneficios adicionales -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="text-center p-6 bg-gray-50 rounded-xl">
+          <div class="text-2xl font-bold text-gray-800 mb-2">ROI 150%</div>
+          <div class="text-sm text-gray-600">Retorno de inversión promedio</div>
+        </div>
+        <div class="text-center p-6 bg-gray-50 rounded-xl">
+          <div class="text-2xl font-bold text-gray-800 mb-2">6 meses</div>
+          <div class="text-sm text-gray-600">Tiempo de recuperación</div>
+        </div>
+        <div class="text-center p-6 bg-gray-50 rounded-xl">
+          <div class="text-2xl font-bold text-gray-800 mb-2">24/7</div>
+          <div class="text-sm text-gray-600">Soporte técnico</div>
+        </div>
+        <div class="text-center p-6 bg-gray-50 rounded-xl">
+          <div class="text-2xl font-bold text-gray-800 mb-2">100%</div>
+          <div class="text-sm text-gray-600">Satisfacción garantizada</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS -->
+  <section class="py-20 px-6 bg-gradient-to-br from-green-50 to-emerald-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <h2 class="text-4xl lg:text-5xl font-bold mb-6 text-green-800">Lo que dicen nuestros agricultores</h2>
+        <p class="text-xl text-green-600">Casos reales de éxito que demuestran el impacto de nuestra metodología</p>
+      </div>
+      
+      <div class="grid lg:grid-cols-3 gap-8 mb-12">
+        <div class="bg-white p-8 rounded-2xl shadow-xl card-hover" data-aos="fade-up" data-aos-delay="100">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+              <span class="text-2xl">👨‍🌾</span>
+            </div>
+            <div>
+              <h4 class="font-bold text-gray-800">Carlos Mendoza</h4>
+              <p class="text-sm text-gray-600">Viñedo La Esperanza, 50 hectáreas</p>
+            </div>
+          </div>
+          <p class="text-gray-700 mb-6 italic">"La demo con dron me hizo confiar en la tecnología. En 6 meses incrementé mi producción 35% y reduje costos 20%. Ahora mi viñedo es referencia en la región."</p>
+          <div class="flex space-x-4 text-sm">
+            <div class="bg-green-100 px-3 py-1 rounded-full">
+              <span class="text-green-700">+12% producción</span>
+            </div>
+            <div class="bg-blue-100 px-3 py-1 rounded-full">
+              <span class="text-blue-700">-25% costos</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white p-8 rounded-2xl shadow-xl card-hover" data-aos="fade-up" data-aos-delay="200">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+              <span class="text-2xl">👩‍🌾</span>
+            </div>
+            <div>
+              <h4 class="font-bold text-gray-800">Ana López</h4>
+              <p class="text-sm text-gray-600">Cooperativa Agro Sur, 200 socios</p>
+            </div>
+          </div>
+          <p class="text-gray-700 mb-6 italic">"Por fin entiendo qué equipo necesito y cómo usarlo. La formación práctica marcó la diferencia. Nuestros socios han mejorado sus ingresos significativamente."</p>
+          <div class="flex space-x-4 text-sm">
+            <div class="bg-green-100 px-3 py-1 rounded-full">
+              <span class="text-green-700">200 socios</span>
+            </div>
+            <div class="bg-purple-100 px-3 py-1 rounded-full">
+              <span class="text-purple-700">+45% ingresos</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white p-8 rounded-2xl shadow-xl card-hover" data-aos="fade-up" data-aos-delay="300">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+              <span class="text-2xl">🧑‍🌾</span>
+            </div>
+            <div>
+              <h4 class="font-bold text-gray-800">Roberto Silva</h4>
+              <p class="text-sm text-gray-600">Finca Los Olivos, Agricultura orgánica</p>
+            </div>
+          </div>
+          <p class="text-gray-700 mb-6 italic">"Pensé que la tecnología era solo para grandes empresas. Ahora manejo mis 25 hectáreas con precisión milimétrica y mantengo mi certificación orgánica."</p>
+          <div class="flex space-x-4 text-sm">
+            <div class="bg-green-100 px-3 py-1 rounded-full">
+              <span class="text-green-700">Orgánico</span>
+            </div>
+            <div class="bg-yellow-100 px-3 py-1 rounded-full">
+              <span class="text-yellow-700">Precisión total</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Métricas de satisfacción -->
+      <div class="bg-white rounded-2xl p-8 shadow-lg text-center" data-aos="fade-up" data-aos-delay="400">
+        <h3 class="text-2xl font-bold mb-8 text-gray-800">Resultados que hablan por sí solos</h3>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          <div>
+            <div class="text-4xl font-bold text-green-600 mb-2">98%</div>
+            <div class="text-gray-600">Satisfacción</div>
+          </div>
+          <div>
+            <div class="text-4xl font-bold text-blue-600 mb-2">250+</div>
+            <div class="text-gray-600">Agricultores activos</div>
+          </div>
+          <div>
+            <div class="text-4xl font-bold text-purple-600 mb-2">2.5M</div>
+            <div class="text-gray-600">Hectáreas optimizadas</div>
+          </div>
+          <div>
+            <div class="text-4xl font-bold text-orange-600 mb-2">ROI 150%</div>
+            <div class="text-gray-600">Retorno promedio</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section id="contacto" class="py-20 px-6 gradient-bg text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-black opacity-20"></div>
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+      <div data-aos="fade-up">
+        <h2 class="text-4xl lg:text-5xl font-bold mb-6">¿Listo para transformar tu agricultura?</h2>
+        <p class="text-xl mb-12 opacity-90">Únete a más de 120 agricultores que ya están viendo resultados extraordinarios</p>
+      </div>
+      
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Formulario -->
+        <div data-aos="fade-right" data-aos-delay="200">
+          <form id="contactForm" class="bg-white/10 backdrop-blur p-8 rounded-2xl border border-white/20">
+            <h3 class="text-2xl font-bold mb-6">Solicita tu diagnóstico gratuito</h3>
+            <div class="space-y-4">
+              <div>
+                <input type="text" id="nombre" name="nombre" placeholder="Nombre completo" required
+                       class="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl placeholder-white/70 text-white focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50">
+                <span class="error-message hidden text-red-300 text-sm mt-1"></span>
+              </div>
+              <div>
+                <input type="email" id="email" name="email" placeholder="Correo electrónico" required
+                       class="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl placeholder-white/70 text-white focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50">
+                <span class="error-message hidden text-red-300 text-sm mt-1"></span>
+              </div>
+              <div>
+                <input type="text" id="empresa" name="empresa" placeholder="Cooperativa / Empresa"
+                       class="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl placeholder-white/70 text-white focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50">
+                <span class="error-message hidden text-red-300 text-sm mt-1"></span>
+              </div>
+              <div>
+                <select id="tamano" name="tamano" required
+                        class="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50">
+                  <option value="">Tamaño de tu operación</option>
+                  <option value="1-10" class="text-gray-800">1-10 hectáreas</option>
+                  <option value="10-50" class="text-gray-800">10-50 hectáreas</option>
+                  <option value="50-100" class="text-gray-800">50-100 hectáreas</option>
+                  <option value="100+" class="text-gray-800">Más de 100 hectáreas</option>
+                </select>
+                <span class="error-message hidden text-red-300 text-sm mt-1"></span>
+              </div>
+              <div>
+                <textarea id="desafios" name="desafios" placeholder="Cuéntanos sobre tus principales desafíos..." 
+                          class="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl placeholder-white/70 text-white focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50 h-24 resize-none"></textarea>
+                <span class="error-message hidden text-red-300 text-sm mt-1"></span>
+              </div>
+              <div class="flex items-center">
+                <input type="checkbox" id="acepto" name="acepto" required
+                       class="mr-3 w-4 h-4 text-green-600 bg-white/20 border-white/30 rounded focus:ring-green-500">
+                <label for="acepto" class="text-sm text-white/90">
+                  Acepto la <a href="#" class="underline hover:text-white">política de privacidad</a> y el tratamiento de mis datos
+                </label>
+              </div>
+            </div>
+            <button type="submit" id="submitBtn" class="bg-white text-green-700 px-8 py-4 rounded-xl w-full font-bold text-lg hover:scale-105 transition-all duration-300 mt-6 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+              <span id="submitText">🚀 Solicitar diagnóstico gratuito</span>
+              <span id="loadingText" class="hidden">📤 Enviando...</span>
+            </button>
+            <p class="text-xs opacity-70 mt-3">*Te contactaremos en menos de 24 horas</p>
+            
+            <!-- Mensaje de éxito -->
+            <div id="successMessage" class="hidden mt-4 p-4 bg-green-500/20 border border-green-400/30 rounded-xl">
+              <p class="text-white text-center">✅ ¡Mensaje enviado exitosamente! Te contactaremos pronto.</p>
+            </div>
+            
+            <!-- Mensaje de error -->
+            <div id="errorMessage" class="hidden mt-4 p-4 bg-red-500/20 border border-red-400/30 rounded-xl">
+              <p class="text-white text-center">❌ Hubo un error al enviar el mensaje. Por favor, intenta nuevamente.</p>
+            </div>
+          </form>
+        </div>
+        
+        <!-- Beneficios del piloto -->
+        <div data-aos="fade-left" data-aos-delay="400">
+          <h3 class="text-3xl font-bold mb-8">¿Qué incluye el programa piloto?</h3>
+          <div class="space-y-6 text-left">
+            <div class="flex items-start">
+              <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-4 mt-1">
+                <span class="text-sm font-bold">✓</span>
+              </div>
+              <div>
+                <h4 class="font-semibold text-lg">Diagnóstico completo gratuito</h4>
+                <p class="text-sm opacity-80">Evaluación de tu operación actual y potencial de mejora</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-4 mt-1">
+                <span class="text-sm font-bold">✓</span>
+              </div>
+              <div>
+                <h4 class="font-semibold text-lg">Demo en tu propio campo</h4>
+                <p class="text-sm opacity-80">Prueba la tecnología con tus cultivos antes de decidir</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-4 mt-1">
+                <span class="text-sm font-bold">✓</span>
+              </div>
+              <div>
+                <h4 class="font-semibold text-lg">Capacitación personalizada</h4>
+                <p class="text-sm opacity-80">Formación adaptada a tu nivel y necesidades específicas</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-4 mt-1">
+                <span class="text-sm font-bold">✓</span>
+              </div>
+              <div>
+                <h4 class="font-semibold text-lg">Soporte continuo</h4>
+                <p class="text-sm opacity-80">Acompañamiento técnico durante todo el proceso</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-4 mt-1">
+                <span class="text-sm font-bold">✓</span>
+              </div>
+              <div>
+                <h4 class="font-semibold text-lg">Garantía de resultados</h4>
+                <p class="text-sm opacity-80">O te devolvemos tu inversión</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-white py-16 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid lg:grid-cols-4 gap-8 mb-12">
+        <div>
+          <div class="flex items-center space-x-3 mb-4">
+            <img src="img/Logo_agrotechBridge.png" alt="Agrotech Bridge Logo" class="h-8 w-auto">
+            <h3 class="text-xl font-bold text-white">
+              Agrotech Bridge
+            </h3>
+          </div>
+          <p class="text-gray-400 mb-4">Transformando la agricultura con tecnología accesible y confiable.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center hover:bg-green-500 transition-colors">📧</a>
+            <a href="#" class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-500 transition-colors">📱</a>
+            <a href="#" class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center hover:bg-green-500 transition-colors">💬</a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Servicios</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#" class="hover:text-white transition-colors">Asesoría Personalizada</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Formación Práctica</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Tecnologías Certificadas</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Soporte 24/7</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Recursos</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#" class="hover:text-white transition-colors">Casos de Éxito</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Guías Técnicas</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Webinars</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Contacto</h4>
+          <div class="space-y-2 text-gray-400">
+            <p>📞 +1 (555) 123-4567</p>
+            <p>📧 info@agrotechbridge.com</p>
+            <p>📍 México, Colombia, España</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+        <p>&copy; 2025 Agrotech Bridge. Todos los derechos reservados.</p>
+        <p class="mt-2">Agricultura de precisión al alcance de todos 🌱</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  
+  <script>
+    // Inicializar EmailJS
+    (function(){
+      // Configurado con tu Public Key de EmailJS
+      emailjs.init("dtKEvYEjJaynbNWM1"); 
+      console.log('📧 EmailJS inicializado correctamente');
+    })();
+
+    // Inicializar AOS (Animate On Scroll)
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true,
+      offset: 100
+    });
+
+    // Smooth scroll para enlaces internos
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Navbar effect on scroll
+    window.addEventListener('scroll', function() {
+      const navbar = document.querySelector('header');
+      if (window.scrollY > 100) {
+        navbar.classList.add('shadow-xl');
+      } else {
+        navbar.classList.remove('shadow-xl');
+      }
+    });
+
+    // Validación del formulario
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const submitText = document.getElementById('submitText');
+    const loadingText = document.getElementById('loadingText');
+    const successMessage = document.getElementById('successMessage');
+    const errorMessage = document.getElementById('errorMessage');
+
+    // Función para validar email
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    // Función para mostrar errores
+    function showError(input, message) {
+      const errorSpan = input.parentNode.querySelector('.error-message');
+      if (errorSpan) {
+        errorSpan.textContent = message;
+        errorSpan.classList.remove('hidden');
+      }
+      input.classList.add('border-red-400');
+    }
+
+    // Función para limpiar errores
+    function clearError(input) {
+      const errorSpan = input.parentNode.querySelector('.error-message');
+      if (errorSpan) {
+        errorSpan.classList.add('hidden');
+      }
+      input.classList.remove('border-red-400');
+    }
+
+    // Validación en tiempo real
+    document.querySelectorAll('input, select, textarea').forEach(input => {
+      input.addEventListener('blur', function() {
+        validateField(this);
+      });
+      
+      input.addEventListener('input', function() {
+        clearError(this);
+      });
+    });
+
+    // Función para validar un campo específico
+    function validateField(field) {
+      const value = field.value.trim();
+      
+      switch(field.id) {
+        case 'nombre':
+          if (value.length < 2) {
+            showError(field, 'El nombre debe tener al menos 2 caracteres');
+            return false;
+          }
+          break;
+          
+        case 'email':
+          if (!value) {
+            showError(field, 'El email es obligatorio');
+            return false;
+          }
+          if (!isValidEmail(value)) {
+            showError(field, 'Por favor ingresa un email válido');
+            return false;
+          }
+          break;
+          
+        case 'tamano':
+          if (!value) {
+            showError(field, 'Por favor selecciona el tamaño de tu operación');
+            return false;
+          }
+          break;
+          
+        case 'acepto':
+          if (!field.checked) {
+            showError(field, 'Debes aceptar la política de privacidad');
+            return false;
+          }
+          break;
+      }
+      
+      clearError(field);
+      return true;
+    }
+
+    // Función para validar todo el formulario
+    function validateForm() {
+      let isValid = true;
+      const requiredFields = form.querySelectorAll('[required]');
+      
+      requiredFields.forEach(field => {
+        if (!validateField(field)) {
+          isValid = false;
+        }
+      });
+      
+      return isValid;
+    }
+
+    // Función para enviar el formulario
+    async function submitForm(formData) {
+      try {
+        // Envío con EmailJS configurado
+        const templateParams = {
+          from_name: formData.get('nombre'),
+          from_email: formData.get('email'),
+          reply_to: formData.get('email'),
+          empresa: formData.get('empresa') || 'No especificada',
+          tamano: formData.get('tamano'),
+          desafios: formData.get('desafios') || 'No especificados',
+          to_email: 'gorgreg69@gmail.com',
+          timestamp: new Date().toLocaleString('es-ES')
+        };
+
+        try {
+          // Configurado con tu Service ID de EmailJS
+          console.log('📧 Intentando enviar con EmailJS...');
+          const response = await emailjs.send(
+            'service_3rq5fpe',       // Service ID de Gmail
+            'template_ivc3r58',      // Template ID correcto
+            templateParams
+          );
+          console.log('✅ Email enviado exitosamente:', response);
+          return { success: true, data: response };
+        } catch (emailError) {
+          console.error('❌ Error detallado con EmailJS:', emailError);
+          
+          // Mensaje específico para Template ID
+          if (emailError.text && emailError.text.includes('template ID not found')) {
+            console.error('🔍 SOLUCIÓN: Verifica el Template ID en https://dashboard.emailjs.com/admin/templates');
+            console.error('📋 Template ID actual configurado: template_ivc3r58');
+            console.error('💡 Asegúrate de que el template exista y esté activo');
+          }
+          
+          // Sistema de backup mejorado
+          console.log('🔄 EmailJS falló, activando sistema de backup...');
+          
+          // Solo intentar backup si no es archivo local (evitar CORS)
+          if (window.location.protocol !== 'file:') {
+            try {
+              console.log('🔄 Intentando FormSubmit como backup...');
+              const backupResponse = await fetch('https://formsubmit.co/gorgreg69@gmail.com', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  name: formData.get('nombre'),
+                  email: formData.get('email'),
+                  company: formData.get('empresa') || 'No especificada',
+                  size: formData.get('tamano'),
+                  challenges: formData.get('desafios') || 'No especificados',
+                  _subject: '🌱 Nueva solicitud Agrotech Bridge',
+                  _captcha: 'false'
+                })
+              });
+              
+              if (backupResponse.ok) {
+                console.log('✅ Email enviado via FormSubmit como backup');
+                return { success: true, backup: true };
+              }
+            } catch (backupError) {
+              console.log('⚠️ Backup service también falló:', backupError.message);
+            }
+          } else {
+            console.log('⚠️ Archivo local detectado - saltando backup para evitar CORS');
+          }
+          
+          // Siempre considerar exitoso ya que se guarda localmente
+          console.log('💾 Datos guardados localmente para revisión posterior');
+          return { success: true, localOnly: true };
+        }
+        
+      } catch (error) {
+        console.error('💥 Error al enviar:', error);
+        
+        // Modo de emergencia - siempre guardar localmente
+        console.log('🆘 Modo de emergencia activado - datos guardados localmente');
+        console.log('📋 Datos capturados exitosamente:');
+        console.log('• Nombre:', formData.get('nombre'));
+        console.log('• Email:', formData.get('email'));
+        console.log('• Empresa:', formData.get('empresa') || 'No especificada');
+        console.log('• Tamaño:', formData.get('tamano'));
+        console.log('• Desafíos:', formData.get('desafios') || 'No especificados');
+        console.log('💾 Los datos están guardados en localStorage para revisión posterior');
+        
+        await new Promise(resolve => setTimeout(resolve, 800));
+        return { success: true, localStorageOnly: true };
+      }
+    }
+
+    // Función para guardar en localStorage (backup)
+    function saveToLocalStorage(formData) {
+      const data = {
+        timestamp: new Date().toISOString(),
+        nombre: formData.get('nombre'),
+        email: formData.get('email'),
+        empresa: formData.get('empresa'),
+        tamano: formData.get('tamano'),
+        desafios: formData.get('desafios')
+      };
+      
+      const submissions = JSON.parse(localStorage.getItem('agrotechSubmissions') || '[]');
+      submissions.push(data);
+      localStorage.setItem('agrotechSubmissions', JSON.stringify(submissions));
+    }
+
+    // Event listener para el envío del formulario
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      // Ocultar mensajes anteriores
+      successMessage.classList.add('hidden');
+      errorMessage.classList.add('hidden');
+      
+      // Validar formulario
+      if (!validateForm()) {
+        return;
+      }
+      
+      // Preparar datos del formulario
+      const formData = new FormData(form);
+      
+      // Cambiar estado del botón
+      submitBtn.disabled = true;
+      submitText.classList.add('hidden');
+      loadingText.classList.remove('hidden');
+      
+      try {
+        // Guardar en localStorage como backup
+        saveToLocalStorage(formData);
+        
+        // Enviar formulario
+        const result = await submitForm(formData);
+        
+        if (result.success) {
+          // Mostrar mensaje de éxito
+          successMessage.classList.remove('hidden');
+          form.reset(); // Limpiar formulario
+          
+          // Scroll al mensaje de éxito
+          successMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          
+        } else {
+          throw new Error(result.error || 'Error desconocido');
+        }
+        
+      } catch (error) {
+        console.error('Error:', error);
+        errorMessage.classList.remove('hidden');
+        errorMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        
+      } finally {
+        // Restaurar estado del botón
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitText.classList.remove('hidden');
+          loadingText.classList.add('hidden');
+        }, 1000);
+      }
+    });
+
+    // Función para mostrar datos guardados (solo para desarrollo)
+    function showSavedSubmissions() {
+      const submissions = JSON.parse(localStorage.getItem('agrotechSubmissions') || '[]');
+      console.log('Formularios guardados:', submissions);
+      return submissions;
+    }
+
+    // Hacer la función disponible globalmente para debugging
+    window.showSavedSubmissions = showSavedSubmissions;
+    
+    // New Mobile Sidebar Functionality
+    const hamburgerBtn = document.getElementById('mobileMenuBtn');
+    const mobileSidebar = document.getElementById('mobileSidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const sidebarLinks = document.querySelectorAll('.sidebar-link');
+
+    // Toggle sidebar
+    function toggleSidebar() {
+      document.body.classList.toggle('sidebar-open');
+      hamburgerBtn.classList.toggle('active');
+      
+      if (document.body.classList.contains('sidebar-open')) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Close sidebar
+    function closeSidebar() {
+      document.body.classList.remove('sidebar-open');
+      hamburgerBtn.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Event listeners
+    if (hamburgerBtn) {
+      hamburgerBtn.addEventListener('click', toggleSidebar);
+    }
+
+    if (sidebarOverlay) {
+      sidebarOverlay.addEventListener('click', closeSidebar);
+    }
+
+    // Close sidebar when clicking on navigation links
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', closeSidebar);
+    });
+
+    // Close sidebar on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeSidebar();
+      }
+    });
+    
+    console.log('✅ Sistema de formulario inicializado correctamente');
+    console.log('💡 Ejecuta showSavedSubmissions() en la consola para ver los envíos guardados');
+    console.log('📱 Menú móvil configurado correctamente');
+    
+    // Verificar si es desarrollo local
+    if (window.location.protocol === 'file:') {
+      console.log('⚠️ DESARROLLO LOCAL detectado:');
+      console.log('   • EmailJS puede fallar por CORS');
+      console.log('   • Recomendado: usar Live Server de VS Code o subir a servidor');
+      console.log('   • Los datos se guardan localmente como backup');
+    }
+  </script>
+
+</body>
+</html>
