@@ -284,6 +284,50 @@
       opacity: 1;
       transform: scale(1.1);
     }
+
+    /* Variantes de color según contexto */
+    .scientific-ref.red-bg .ref-icon {
+      background: rgba(255, 255, 255, 0.9);
+      color: #dc2626;
+      border: 1px solid rgba(220, 38, 38, 0.3);
+    }
+    
+    .scientific-ref.red-bg:hover .ref-icon {
+      background: rgba(255, 255, 255, 1);
+      color: #dc2626;
+    }
+
+    .scientific-ref.blue-bg .ref-icon {
+      background: rgba(255, 255, 255, 0.9);
+      color: #2563eb;
+      border: 1px solid rgba(37, 99, 235, 0.3);
+    }
+    
+    .scientific-ref.blue-bg:hover .ref-icon {
+      background: rgba(255, 255, 255, 1);
+      color: #2563eb;
+    }
+
+    .scientific-ref.emerald-bg .ref-icon {
+      background: rgba(255, 255, 255, 0.9);
+      color: #059669;
+      border: 1px solid rgba(5, 150, 105, 0.3);
+    }
+    
+    .scientific-ref.emerald-bg:hover .ref-icon {
+      background: rgba(255, 255, 255, 1);
+      color: #059669;
+    }
+
+    .scientific-ref.gray-bg .ref-icon {
+      background: rgba(75, 85, 99, 0.9);
+      color: white;
+      border: 1px solid rgba(156, 163, 175, 0.3);
+    }
+    
+    .scientific-ref.gray-bg:hover .ref-icon {
+      background: rgba(75, 85, 99, 1);
+    }
     
     .scientific-ref .ref-tooltip {
       visibility: hidden;
@@ -339,6 +383,26 @@
       color: #9ca3af;
       font-style: italic;
       font-size: 10px;
+    }
+    
+    /* Estilos adicionales para tarjetas de retos */
+    .group:hover .animate-bounce {
+      animation: bounce 1s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 53%, 80%, 100% {
+        transform: translate3d(0,0,0);
+      }
+      40%, 43% {
+        transform: translate3d(0,-8px,0);
+      }
+      70% {
+        transform: translate3d(0,-4px,0);
+      }
+      90% {
+        transform: translate3d(0,-2px,0);
+      }
     }
     
     /* Responsive fixes para móviles */
@@ -520,9 +584,9 @@
           <div class="text-2xl sm:text-3xl font-bold text-green-700">+15%<span class="scientific-ref">
             <span class="ref-icon">i</span>
             <div class="ref-tooltip">
-              <div class="ref-title">Application of Precision Agriculture Technologies for Sustainable Crop Production</div>
-              <div class="ref-authors">Getahun, S., Kefale, H., Gelaye, Y.</div>
-              <div class="ref-journal">The Scientific World Journal (2024) - Yield increase 15-30%</div>
+              <div class="ref-title"><a href="https://doi.org/10.1007/s44279-024-00078-3" target="_blank" rel="noopener noreferrer" style="color: #16a34a; text-decoration: underline;">Unlocking the Potential of Precision Agriculture for Sustainable Farming</a></div>
+              <div class="ref-authors">Mgendi, G.</div>
+              <div class="ref-journal">Discover Agriculture (2024) - PA increases yields by 20-25%</div>
             </div>
           </span></div>
           <div class="text-xs sm:text-sm text-green-600">Incremento en productividad</div>
@@ -531,9 +595,9 @@
           <div class="text-2xl sm:text-3xl font-bold text-green-700">-25%<span class="scientific-ref">
             <span class="ref-icon">i</span>
             <div class="ref-tooltip">
-              <div class="ref-title">Variable Rate Technology for Nutrient Management</div>
-              <div class="ref-authors">Getahun, S., Kefale, H., Gelaye, Y.</div>
-              <div class="ref-journal">The Scientific World Journal (2024) - 25% fertilizer efficiency increase</div>
+              <div class="ref-title"><a href="https://doi.org/10.1007/s44279-024-00078-3" target="_blank" rel="noopener noreferrer" style="color: #16a34a; text-decoration: underline;">Unlocking the Potential of Precision Agriculture for Sustainable Farming</a></div>
+              <div class="ref-authors">Mgendi, G.</div>
+              <div class="ref-journal">Discover Agriculture (2024) - Cuts inputs 10-30%</div>
             </div>
           </span></div>
           <div class="text-xs sm:text-sm text-green-600">Reducción en costos</div>
@@ -565,45 +629,57 @@
         </p>
       </div>
       
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
         <!-- Reto 1 -->
-        <div class="bg-white p-8 rounded-2xl shadow-lg card-hover text-center" data-aos="fade-up" data-aos-delay="100">
-          <div class="w-20 h-20 mx-auto mb-6 bg-red-100 rounded-2xl flex items-center justify-center">
-            <img src="img/reto1.png" alt="Tecnologías no llegan al agricultor" class="w-12 h-12 rounded-lg">
+        <div class="group bg-white p-6 lg:p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 text-center border-l-4 border-green-600 hover:border-green-500 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
+          <div class="relative w-32 h-32 mx-auto mb-6">
+            <div class="absolute inset-0 bg-gradient-to-br from-green-500 to-green-700 rounded-3xl rotate-6 group-hover:rotate-12 transition-transform duration-500"></div>
+            <div class="relative bg-white rounded-3xl p-3 flex items-center justify-center shadow-lg">
+              <img src="img/reto1.png" alt="Tecnologías no llegan al agricultor" class="w-20 h-20 group-hover:scale-110 transition-transform duration-300">
+            </div>
           </div>
-          <div class="text-4xl mb-4">🌱</div>
-          <h3 class="font-semibold text-lg mb-3 text-gray-800">Brecha Tecnológica</h3>
-          <p class="text-gray-600">Las tecnologías existen, pero no llegan al agricultor de forma accesible</p>
+          <h3 class="font-bold text-xl mb-4 text-gray-800 group-hover:text-green-600 transition-colors duration-300">Brecha Tecnológica</h3>
+          <p class="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">Las tecnologías existen, pero no llegan al agricultor de forma accesible</p>
+          <div class="mt-4 h-1 w-0 group-hover:w-full bg-gradient-to-r from-green-600 to-emerald-500 rounded-full transition-all duration-500 mx-auto"></div>
         </div>
         
         <!-- Reto 2 -->
-        <div class="bg-white p-8 rounded-2xl shadow-lg card-hover text-center" data-aos="fade-up" data-aos-delay="200">
-          <div class="w-20 h-20 mx-auto mb-6 bg-orange-100 rounded-2xl flex items-center justify-center">
-            <img src="img/reto2.png" alt="Desconfianza hacia corporaciones" class="w-12 h-12 rounded-lg">
+        <div class="group bg-white p-6 lg:p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 text-center border-l-4 border-emerald-500 hover:border-emerald-400 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
+          <div class="relative w-32 h-32 mx-auto mb-6">
+            <div class="absolute inset-0 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-3xl rotate-6 group-hover:rotate-12 transition-transform duration-500"></div>
+            <div class="relative bg-white rounded-3xl p-3 flex items-center justify-center shadow-lg">
+              <img src="img/reto2.png" alt="Desconfianza hacia corporaciones" class="w-20 h-20 group-hover:scale-110 transition-transform duration-300">
+            </div>
           </div>
-          <div class="text-4xl mb-4">🤝</div>
-          <h3 class="font-semibold text-lg mb-3 text-gray-800">Falta de Confianza</h3>
-          <p class="text-gray-600">Desconfianza hacia grandes corporaciones y sus promesas no cumplidas</p>
+          <h3 class="font-bold text-xl mb-4 text-gray-800 group-hover:text-emerald-500 transition-colors duration-300">Falta de Confianza</h3>
+          <p class="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">Desconfianza hacia grandes corporaciones y sus promesas no cumplidas</p>
+          <div class="mt-4 h-1 w-0 group-hover:w-full bg-gradient-to-r from-green-600 to-emerald-500 rounded-full transition-all duration-500 mx-auto"></div>
         </div>
         
         <!-- Reto 3 -->
-        <div class="bg-white p-8 rounded-2xl shadow-lg card-hover text-center" data-aos="fade-up" data-aos-delay="300">
-          <div class="w-20 h-20 mx-auto mb-6 bg-blue-100 rounded-2xl flex items-center justify-center">
-            <img src="img/reto3.png" alt="Falta de formación práctica" class="w-12 h-12 rounded-lg">
+        <div class="group bg-white p-6 lg:p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 text-center border-l-4 border-green-500 hover:border-green-400 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
+          <div class="relative w-32 h-32 mx-auto mb-6">
+            <div class="absolute inset-0 bg-gradient-to-br from-green-400 to-green-600 rounded-3xl rotate-6 group-hover:rotate-12 transition-transform duration-500"></div>
+            <div class="relative bg-white rounded-3xl p-3 flex items-center justify-center shadow-lg">
+              <img src="img/reto3.png" alt="Falta de formación práctica" class="w-20 h-20 group-hover:scale-110 transition-transform duration-300">
+            </div>
           </div>
-          <div class="text-4xl mb-4">📚</div>
-          <h3 class="font-semibold text-lg mb-3 text-gray-800">Capacitación Insuficiente</h3>
-          <p class="text-gray-600">Falta de formación práctica y adaptada a la realidad del campo</p>
+          <h3 class="font-bold text-xl mb-4 text-gray-800 group-hover:text-green-500 transition-colors duration-300">Capacitación Insuficiente</h3>
+          <p class="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">Falta de formación práctica y adaptada a la realidad del campo</p>
+          <div class="mt-4 h-1 w-0 group-hover:w-full bg-gradient-to-r from-green-600 to-emerald-500 rounded-full transition-all duration-500 mx-auto"></div>
         </div>
         
         <!-- Reto 4 -->
-        <div class="bg-white p-8 rounded-2xl shadow-lg card-hover text-center" data-aos="fade-up" data-aos-delay="400">
-          <div class="w-20 h-20 mx-auto mb-6 bg-purple-100 rounded-2xl flex items-center justify-center">
-            <img src="img/reto4.png" alt="Dificultad para decidir equipos" class="w-12 h-12 rounded-lg">
+        <div class="group bg-white p-6 lg:p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 text-center border-l-4 border-emerald-600 hover:border-emerald-500 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="400">
+          <div class="relative w-32 h-32 mx-auto mb-6">
+            <div class="absolute inset-0 bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-3xl rotate-6 group-hover:rotate-12 transition-transform duration-500"></div>
+            <div class="relative bg-white rounded-3xl p-3 flex items-center justify-center shadow-lg">
+              <img src="img/reto4.png" alt="Dificultad para decidir equipos" class="w-20 h-20 group-hover:scale-110 transition-transform duration-300">
+            </div>
           </div>
-          <div class="text-4xl mb-4">⚡</div>
-          <h3 class="font-semibold text-lg mb-3 text-gray-800">Decisiones Complejas</h3>
-          <p class="text-gray-600">Dificultad para decidir qué tecnología comprar y cómo implementarla</p>
+          <h3 class="font-bold text-xl mb-4 text-gray-800 group-hover:text-emerald-600 transition-colors duration-300">Decisiones Complejas</h3>
+          <p class="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">Dificultad para decidir qué tecnología comprar y cómo implementarla</p>
+          <div class="mt-4 h-1 w-0 group-hover:w-full bg-gradient-to-r from-green-600 to-emerald-500 rounded-full transition-all duration-500 mx-auto"></div>
         </div>
       </div>
       
@@ -620,7 +696,26 @@
             <div class="text-sm opacity-90">Agricultores sin acceso a tecnología</div>
           </div>
           <div>
-            <div class="text-3xl font-bold">2030</div>
+            <div class="text-3xl font-bold">2030<span class="scientific-ref red-bg">
+              <span class="ref-icon">i</span>
+              <div class="ref-tooltip">
+                <div class="ref-title"><a href="https://sdgs.un.org/2030agenda" target="_blank" rel="noopener noreferrer" style="color: #16a34a; text-decoration: underline;">Agenda 2030 para el Desarrollo Sostenible</a></div>
+                <div class="ref-authors">Naciones Unidas</div>
+                <div class="ref-journal">ONU (2015) - Objetivos de Desarrollo Sostenible</div>
+                <div class="ref-sdgs" style="margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(156, 163, 175, 0.3);">
+                  <div style="font-weight: bold; font-size: 11px; color: #374151; margin-bottom: 6px;">ODS que apoya este proyecto:</div>
+                  <div style="font-size: 10px; line-height: 1.4; color: #6b7280;">
+                    <div>• <strong>ODS 2:</strong> Hambre Cero - Agricultura sostenible</div>
+                    <div>• <strong>ODS 6:</strong> Agua Limpia - Uso eficiente del agua</div>
+                    <div>• <strong>ODS 8:</strong> Trabajo Decente - Crecimiento económico rural</div>
+                    <div>• <strong>ODS 9:</strong> Industria e Innovación - Tecnología agrícola</div>
+                    <div>• <strong>ODS 12:</strong> Producción Responsable - Agricultura eficiente</div>
+                    <div>• <strong>ODS 13:</strong> Acción Climática - Reducción huella carbono</div>
+                    <div>• <strong>ODS 15:</strong> Vida Terrestre - Suelos sostenibles</div>
+                  </div>
+                </div>
+              </div>
+            </span></div>
             <div class="text-sm opacity-90">Año límite para la transformación</div>
           </div>
         </div>
@@ -725,12 +820,12 @@
           <h3 class="font-bold text-2xl mb-4 text-blue-800">Ahorro de Recursos</h3>
           <p class="text-gray-700 mb-6">Optimización inteligente de agua, fertilizantes y tiempo de trabajo</p>
           <div class="bg-white rounded-xl p-4">
-            <div class="text-3xl font-bold text-blue-600 mb-1">-30%<span class="scientific-ref">
+            <div class="text-3xl font-bold text-blue-600 mb-1">-30%<span class="scientific-ref blue-bg">
               <span class="ref-icon">i</span>
               <div class="ref-tooltip">
-                <div class="ref-title">Water Management with IoT Sensors and Precision Irrigation</div>
-                <div class="ref-authors">Getahun, S., Kefale, H., Gelaye, Y.</div>
-                <div class="ref-journal">The Scientific World Journal (2024) - Water reduction 30-50%</div>
+                <div class="ref-title"><a href="https://doi.org/10.1007/s44279-024-00078-3" target="_blank" rel="noopener noreferrer" style="color: #16a34a; text-decoration: underline;">Unlocking the Potential of Precision Agriculture for Sustainable Farming</a></div>
+                <div class="ref-authors">Mgendi, G.</div>
+                <div class="ref-journal">Discover Agriculture (2024) - 33% water reduction in California almonds</div>
               </div>
             </span></div>
             <div class="text-sm text-gray-600">Reducción en consumo de agua</div>
@@ -745,7 +840,7 @@
             <div class="text-3xl font-bold text-green-600 mb-1">+15%<span class="scientific-ref">
               <span class="ref-icon">i</span>
               <div class="ref-tooltip">
-                <div class="ref-title">Crop Monitoring with Drones and AI Analytics</div>
+                <div class="ref-title"><a href="https://doi.org/10.1155/2024/2126734" target="_blank" rel="noopener noreferrer" style="color: #16a34a; text-decoration: underline;">Application of Precision Agriculture Technologies for Sustainable Crop Production and Environmental Sustainability: A Systematic Review</a></div>
                 <div class="ref-authors">Getahun, S., Kefale, H., Gelaye, Y.</div>
                 <div class="ref-journal">The Scientific World Journal (2024) - Yield increase 10-20%</div>
               </div>
@@ -759,7 +854,14 @@
           <h3 class="font-bold text-2xl mb-4 text-emerald-800">Sostenibilidad</h3>
           <p class="text-gray-700 mb-6">Contribuye a una agricultura responsable, regenerativa y competitiva</p>
           <div class="bg-white rounded-xl p-4">
-            <div class="text-3xl font-bold text-emerald-600 mb-1">-20%</div>
+            <div class="text-3xl font-bold text-emerald-600 mb-1">-20%<span class="scientific-ref emerald-bg">
+              <span class="ref-icon">i</span>
+              <div class="ref-tooltip">
+                <div class="ref-title"><a href="https://doi.org/10.1155/2024/2126734" target="_blank" rel="noopener noreferrer" style="color: #16a34a; text-decoration: underline;">Application of Precision Agriculture Technologies for Sustainable Crop Production and Environmental Sustainability: A Systematic Review</a></div>
+                <div class="ref-authors">Getahun, S., Kefale, H., Gelaye, Y.</div>
+                <div class="ref-journal">The Scientific World Journal (2024) - Environmental sustainability benefits</div>
+              </div>
+            </span></div>
             <div class="text-sm text-gray-600">Reducción huella carbono</div>
           </div>
         </div>
@@ -768,16 +870,23 @@
       <!-- Beneficios adicionales -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-6" data-aos="fade-up" data-aos-delay="400">
         <div class="text-center p-6 bg-gray-50 rounded-xl">
-          <div class="text-2xl font-bold text-gray-800 mb-2">ROI 150%</div>
-          <div class="text-sm text-gray-600">Retorno de inversión promedio</div>
-        </div>
-        <div class="text-center p-6 bg-gray-50 rounded-xl">
-          <div class="text-2xl font-bold text-gray-800 mb-2">6 meses<span class="scientific-ref">
+          <div class="text-2xl font-bold text-gray-800 mb-2">15-30%<span class="scientific-ref gray-bg">
             <span class="ref-icon">i</span>
             <div class="ref-tooltip">
-              <div class="ref-title">GPS-Guided Machinery Efficiency</div>
-              <div class="ref-authors">Getahun, S., Kefale, H., Gelaye, Y.</div>
-              <div class="ref-journal">The Scientific World Journal (2024) - 10-20% fuel savings</div>
+              <div class="ref-title"><a href="https://doi.org/10.1007/s44279-024-00078-3" target="_blank" rel="noopener noreferrer" style="color: #16a34a; text-decoration: underline;">Unlocking the Potential of Precision Agriculture for Sustainable Farming</a></div>
+              <div class="ref-authors">Mgendi, G.</div>
+              <div class="ref-journal">Discover Agriculture (2024) - Profit increases 15-30%</div>
+            </div>
+          </span></div>
+          <div class="text-sm text-gray-600">Incremento en rentabilidad</div>
+        </div>
+        <div class="text-center p-6 bg-gray-50 rounded-xl">
+          <div class="text-2xl font-bold text-gray-800 mb-2">2-5 años<span class="scientific-ref gray-bg">
+            <span class="ref-icon">i</span>
+            <div class="ref-tooltip">
+              <div class="ref-title"><a href="https://doi.org/10.1007/s44279-024-00078-3" target="_blank" rel="noopener noreferrer" style="color: #16a34a; text-decoration: underline;">Unlocking the Potential of Precision Agriculture for Sustainable Farming</a></div>
+              <div class="ref-authors">Mgendi, G.</div>
+              <div class="ref-journal">Discover Agriculture (2024) - ROI recovery 2-5 years</div>
             </div>
           </span></div>
           <div class="text-sm text-gray-600">Tiempo de recuperación</div>
@@ -884,8 +993,15 @@
             <div class="text-gray-600">Hectáreas optimizadas</div>
           </div>
           <div>
-            <div class="text-4xl font-bold text-orange-600 mb-2">ROI 150%</div>
-            <div class="text-gray-600">Retorno promedio</div>
+            <div class="text-4xl font-bold text-orange-600 mb-2">15-30%<span class="scientific-ref">
+              <span class="ref-icon">i</span>
+              <div class="ref-tooltip">
+                <div class="ref-title"><a href="https://doi.org/10.1007/s44279-024-00078-3" target="_blank" rel="noopener noreferrer" style="color: #16a34a; text-decoration: underline;">Unlocking the Potential of Precision Agriculture for Sustainable Farming</a></div>
+                <div class="ref-authors">Mgendi, G.</div>
+                <div class="ref-journal">Discover Agriculture (2024) - Profit increases 15-30%</div>
+              </div>
+            </span></div>
+            <div class="text-gray-600">Incremento en rentabilidad</div>
           </div>
         </div>
       </div>
@@ -1061,9 +1177,9 @@
         <div>
           <h4 class="font-semibold mb-4">Contacto</h4>
           <div class="space-y-2 text-gray-400">
-            <p>📞 +1 (555) 123-4567</p>
+            <p>📞 +34 678 123 456</p>
             <p>📧 info@agrotechbridge.com</p>
-            <p>📍 México, Colombia, España</p>
+            <p>📍 España, Portugal, México, Colombia</p>
           </div>
         </div>
       </div>
